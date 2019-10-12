@@ -1,0 +1,162 @@
+#title{
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Vibes', cursive;
+
+}
+
+#container{
+    font-family: 'Shadows Into Light', cursive;
+    font-weight: bold;
+    margin-top: 7vh;
+    margin-left: 18%;
+    padding-left: 25px;
+    padding-right: 25px;
+    height: 300px;
+    width: 600px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 15fr 3fr;
+    grid-template-areas:  
+    "t t t"
+    "l l l"
+    "fc m lc";
+}
+
+#start{
+    font-weight: bold;
+    font-family: 'Vibes', cursive;
+    text-align: center;
+    position: absolute;
+    margin-left: 187px;
+    margin-top: 50px;
+    font-size: 50px;
+    cursor: pointer;
+    background-color: azure;
+    padding: 10px
+
+}
+
+#win{
+    position: relative;
+    width: 220px;
+    height: 150px;
+    font-weight: bold;
+    font-family: 'Vibes', cursive;
+    text-align: center;
+    margin-left: 183px;
+    margin-top: 25px;
+    font-size: 29;
+    cursor: pointer;
+    background-color: azure;
+    padding: 10px
+
+}
+
+#lose{
+    position: relative;
+    /* width: 150px; */
+    display: inline-block;
+    font-weight: bold;
+    font-family: 'Vibes', cursive;
+    text-align: center;
+    margin-left: 217px;
+    margin-top: 40px;
+    font-size: 29;
+    background-color: azure;
+    padding: 30px;
+
+}
+
+.try-again{
+    color: #e74c3c;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    display: inline-block;
+    padding-left: 25px;
+    padding-right: 25px;}
+
+.message{
+    font-family: 'Shadows Into Light', cursive;
+    font-weight: normal;
+    font-size:22px;
+}
+
+.yes{
+    font-size: 15px;
+    float: left;
+    margin-left: 60px;
+    font-weight: bold;
+    color: red;
+}
+
+.no{
+    font-size: 15px;
+    float: right;
+    margin-right: 60px;
+    font-weight: bold;
+    color: red;
+}
+
+#time-bar{
+    display: grid;
+    grid-area: t;
+    background-color: #2ecc71;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+}
+
+#animal-land{
+    grid-area: l;
+    background-color: #27ae60;
+}
+
+#animal-counter{
+    display: grid;
+    grid-area: fc;
+    background-color: #2ecc71;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+}
+
+#message{
+    display: grid;
+    grid-area: m;
+    background-color: #3498db;
+    align-content: center;
+    justify-content: center;
+}
+
+#level-counter{
+    display: grid;
+    grid-area: lc;
+    background-color: #2ecc71;
+    align-content: center;
+    justify-content: center;
+}
+
+.target{
+    position: absolute;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+/* #container{
+    display: grid;
+    grid-gap: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas: 
+    "h ."
+    "i b"
+    "p p"
+}
+
+#header{
+    grid-area: h;
+    color: #3498db;
+} */
