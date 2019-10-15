@@ -1,108 +1,71 @@
 const CatchStuff = function(){
      _game= {
-        targetType: "hippo",
-        level: [],
+        targetTypes: ["fish", "hippo", "kiwi-bird", "dog", "horse", "cat", "spider", "frog", "dragon"],
+        targetType: 0,
+        level: 0,
         targets: [],
-        time: [],/// this.level //* 1000,
+        time: 0,
     }
-    
-    _myTimeout = []    
-    _myInterval = []
-    _loseStat = false
 
-    const newGame = function(){
+    const newGame = function(){ 
         addTargets(1)
         _game.level = 1
-        _game.targetType = "hippo"
-        _game.time = _game.level * 3000/// this.level //* 1000,
-
-        _loseStat = false
-
-    }
-
-
-    const startTimer = function(){
-        _myTimeout = setTimeout(function(){   
-            console.log("loser")
-            clearInterval(_myInterval)
-            _loseStat = true
-        }, _game.time)
+        targetType =  0
+        _game.time = 1000
     }
 
     const getInfo = function(){
         return _game
     }
 
-    const chooseTarget = function(chosenTarget){
-        _game.target = chosenTarget
+    const addTargets = function(numTargets){
+        _game.targets = []
+
+        const colorList = ["#9b59b6", "#ecf0f1", "#d35400", "#e74c3c", "#1abc9c", "#bdc3c7", "#f3a683", "#3dc1d3", "#ffaf40", "#fffa65", "#c7ecee"]
+
+        for (i=0; i<numTargets; i++){
+            let randomposition = [Math.floor((Math.random() * 560) + 0), Math.floor((Math.random() * 185) + 0.1)]
+            let randomColor = Math.floor((Math.random() * colorList.length) + 0)
+
+            _game.targets.push({
+                id: i+1,
+                position: [randomposition[0] + "px", randomposition[1] + "px"],
+                size: randomposition[1] * 0.0054 * 30 + 10 +"px",
+                color: colorList[randomColor],
+            })
+        }
     }
 
     const removeTarget = function(targetId){
-        let win = false
-
         for (let tar in _game.targets){
             if (_game.targets[tar].id == targetId){
                 _game.targets.splice(tar,1)
-                return checkWin()
             }
         }
     }
 
     const checkWin = function(){
         if (_game.targets == ""){
-            win = true
-            clearTimeout(_myTimeout)
-            clearInterval(_myInterval)
-            return win
+            return true
         }
-        else {
-            win = false
-            return win
-        }
+        return false
     }
 
-    const addTargets = function(numTargets){
-        _game.targets = []
-
-        const colorList = ["#9b59b6", "#ecf0f1", "#d35400", "#e74c3c", "#1abc9c", "#bdc3c7"]
-        
-        for (i=0; i<numTargets; i++){
-            let randomposition = [Math.floor((Math.random() * 560) + 0), Math.floor((Math.random() * 200) + 0)]
-            let randomColor = Math.floor((Math.random() * 5) + 0)
-
-            _game.targets.push({
-                id: i+1,
-                position: [randomposition[0] + "px", randomposition[1] + "px"],
-                color: colorList[randomColor],
-            })
-        }
-
-    }
-
-    const levelUp = function(){
-        _game.level += 1
+    const levelUp = function(){ 
+        _game.level ++
+        _game.time = _game.level * 1000
+        if (_game.targetType <= 7) {_game.targetType ++}
+        else if (_game.targetType = 8) {_game.targetType = 0}
         addTargets(_game.level)
     }
 
-    // const timer = function(){
-    //     setTimeout
-    // }
-
-    const checkLose = function(){
-        return _loseStat
-    }
-
-
     return{
         newGame: newGame,
-        startTimer: startTimer,
         getInfo: getInfo,
-        chooseTarget: chooseTarget,
-        removeTarget: removeTarget,
         addTargets: addTargets,
-        levelUp: levelUp,
+        removeTarget: removeTarget,
         checkWin: checkWin, 
-        checkLose: checkLose,
+        levelUp: levelUp,
     }
 
 }

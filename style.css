@@ -6,6 +6,7 @@
 }
 
 #container{
+    user-select: none;
     font-family: 'Shadows Into Light', cursive;
     font-weight: bold;
     margin-top: 7vh;
@@ -136,6 +137,14 @@
     background-color: #2ecc71;
     align-content: center;
     justify-content: center;
+}
+
+.poop{
+    font-size: 50px;
+    color: brown;
+    padding: 10px;
+    margin-left: 43.5%;
+    margin-top: 40px;
 }
 
 .target{

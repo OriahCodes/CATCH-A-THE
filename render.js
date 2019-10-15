@@ -2,13 +2,16 @@ const Renderer = function(){
 
     const renderTargets = function(gameInfo){
         $("#animal-land").empty()
+        
+        let tarType = gameInfo.targetTypes[gameInfo.targetType]
 
         for (let target of gameInfo.targets){
-
-            let tar = $(`<i class='fas fa-hippo target'></i>`)//$(`<div class='target'><i class='fas fa-hippo'></i></div>`)
+            let divTarget = "<i class='fas fa-" + tarType + " target'></i>"
+            let tar = $(divTarget)
             tar.css("color", target.color)
             tar.css("margin-left", target.position[0])
             tar.css("margin-top", target.position[1])
+            tar.css("font-size", target.size)
             tar.data().id = target.id
 
             $("#animal-land").append(tar)
@@ -17,17 +20,28 @@ const Renderer = function(){
     }
 
     const renderGameInfo = function(gameInfo){
-        $("#title").text("CATCH - A - " + gameInfo.targetType.toUpperCase())  // target's name in title
-        $("#animal-counter").text(gameInfo.targets.length + ' ' + gameInfo.targetType +"'s left") //targt counter
-        $("#level-counter").text("Level " + gameInfo.level) //Level counter
+        let tarType = gameInfo.targetTypes[gameInfo.targetType]
+
+        $("#title").text("CATCH - A - " + tarType.toUpperCase())  
+        
+        if (gameInfo.targets.length == 1){animalsLeft = " left"}
+        else {animalsLeft = "'s left"} 
+        $("#animal-counter").text(gameInfo.targets.length + ' ' +tarType + animalsLeft)
+        
+        $("#level-counter").text("Level " + gameInfo.level) 
     }
 
-    const renderWin = function(){
+    const renderWin = function(){ 
         $("#animal-land").append(`<div id="win"><div> WIN </div><div class='message'>Would you like to continue to the next level?</div><div class='yes'> yes!</div><div class='no'>nah</div></div>`)
     }
 
-    const renderLose = function(){
+    const renderLose = function(){ 
         $("#animal-land").append(`<div id="lose"> <div> LOSER </div><div class='try-again'>Try again</div> </div>`)
+    }
+
+    const renderPoop = function(){
+        $("#animal-land").empty()
+        $("#animal-land").append(`<i class="fas fa-poo poop"></i>`)       
     }
 
     return{
@@ -35,9 +49,9 @@ const Renderer = function(){
         renderGameInfo: renderGameInfo,
         renderWin: renderWin,
         renderLose: renderLose,
+        renderPoop: renderPoop,
     }
 }
 
-{/* <div><i class="fas fa-hippo"></i></div> */}
 
 
