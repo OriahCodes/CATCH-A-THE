@@ -1,25 +1,59 @@
 <html>
     <head>
-        <title>Tweeter</title>
+        <title>Catch-a-the</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css">
-        <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light|Vibes&display=swap" rel="stylesheet">    
+        <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light|Vibes|Cairo|Patrick+Hand&display=swap" rel="stylesheet">    
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+ 
+        <script src="https://www.gstatic.com/firebasejs/7.2.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-firestore.js"></script>
+
     </head>
     <body>
         
-        <h1 id="title">CATCH - A - X</h1>
+        <h1 id="title">CATCH - A - X</h1> 
+
+        <!-- <button id="try-button1">start game</button>
+        <button id="try-button2">level up</button>
+        <button id="try-button3">remove target</button>
+        <button id="try-button4">win?</button>
+        <button id="try-button5">add points</button>
+        <button id="try-button6">get info</button>
+
+        <button id="try-button11">get local info</button> -->
+
         <div id="container">
-            <div id="time-bar"></div>
-            <div id="animal-land">
-                    <div id="start">START GAME</div>
+            <div id="second-player" class="player-bar">
+                <div class="score-title"> competitor's score</div>
+                <div class="score" id="competitor-score"> 0 </div>
+                <!-- <div class="score-bar" id="second-bar"></div> -->
             </div>
-            <div id="animal-counter"></div>
-            <div id="message">Catch 'em all!</div>
-            <div id="level-counter"></div>
+            <div id="game">
+                <div id="time-bar"></div>
+                <div id="animal-land">
+                        <div id="start">
+                            <div id="welcome"> WELCOME </div>
+                            <div id="new-game" onclick="addFirstPlayer()">New game</div>
+                            <div id="join-game">Or, insert code to join another player:</div>
+                            <input id="code-input" type="text" onkeyup="getRoomCode()"/>
+                            <button id="join" onclick="addSecondPlayer()"> Join </button>
+                            <div class="wrong-code">there must have been a mistake, please try again</div>
+                        </div>
+                </div>
+                <div id="animal-counter"></div>
+                <div id="message">Catch 'em all!</div>
+                <div id="level-counter"></div>
+            </div>
+            <div id="first-player" class="player-bar">
+                <div class="score-title"> your score</div>
+                <div class="score" id="my-score"> 0 </div>
+                <div class="plus-points" id="my-plus-points"></div>
+                <!-- <div class="score-bar" id="first-bar"></div> -->
+            </div>
         </div>
 
-
+        <script src="data.js"></script>
         <script src="logic.js"></script>
         <script src="render.js"></script> 
         <script src="main.js"></script> 

@@ -1,3 +1,7 @@
+body{
+    background-color: #f1f2f6;
+}
+
 #title{
     text-align: center;
     font-weight: bold;
@@ -6,36 +10,170 @@
 }
 
 #container{
-    user-select: none;
-    font-family: 'Shadows Into Light', cursive;
-    font-weight: bold;
-    margin-top: 7vh;
-    margin-left: 18%;
-    padding-left: 25px;
-    padding-right: 25px;
-    height: 300px;
-    width: 600px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: 1fr 15fr 3fr;
-    grid-template-areas:  
-    "t t t"
-    "l l l"
-    "fc m lc";
+    grid-template-columns: 1fr 3fr 1fr;
 }
 
-#start{
+    .player-bar{
+        /* height: 280px; */
+        /* width: 50px; */
+        display: grid;
+        grid-template-rows: 3fr 3fr 10fr;
+        font-family: 'Patrick Hand', cursive;
+        grid-template-columns: 5fr 5fr;
+        grid-template-areas:
+            "st ."
+            "s  p"
+            ".  .";
+    }
+
+    #first-player{
+        margin-right: 70px;
+    }
+
+    #second-player{
+        margin-left: 129;
+    }
+
+        .score-title{
+            grid-area: st;
+            width:50px;
+            text-align: center;
+            color: red;
+        }
+
+        .score{
+            grid-area: s;
+            font-size: 25px;
+            font-weight: bold;
+            /* justify-content: center; */
+            /* align-content: center; */
+            text-align: center;
+        }
+
+        #my-plus-points{
+            grid-area: p;
+            color:red;
+            display: none;
+            font-size:  18px;
+        }
+
+
+        .score-bar{
+            width: 30px;
+            height: 50%; /* variable!!!!!!!!!!!!!!!!!!!!!!! */
+            background-color: #e74c3c;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+    #game{
+        user-select: none;
+        font-family: 'Patrick Hand', cursive;
+        /* font-weight: bold; */
+        margin-top: 7vh;
+        /* margin-left: 18%; */
+        padding-left: 25px;
+        padding-right: 25px;
+        height: 300px;
+        width: 600px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1fr 15fr 3fr;
+        grid-template-areas:  
+        "t t t"
+        "l l l"
+        "fc m lc";
+    }
+
+        #start{
+            height: 189px;
+            width: 247px;
+            font-family: 'Patrick Hand', cursive;
+            text-align: center;
+            position: absolute;
+            margin-left: 166px;
+            margin-top: 11px;
+            font-size: 28px;
+            background-color: azure;
+            padding: 10px
+        }
+
+#welcome{
     font-weight: bold;
     font-family: 'Vibes', cursive;
+    font-size: 40px;
+    height: 55px;
+}
+
+#new-game{
+    cursor: pointer;
+    margin-top: 5px;
+    background-color: #e74c3c;
+    padding: 3px;
+    display: inline-block;
+    padding-bottom: 7px;
+    font-size: 24px;
+    box-shadow: 1px 2px 2px gray;
+
+}
+
+.wrong-code{
+    display: none;
+    color:  red;
+    font-size: 13px;
+}
+
+#waiting{
+    font-family: 'Patrick Hand', cursive;
     text-align: center;
     position: absolute;
-    margin-left: 187px;
-    margin-top: 50px;
-    font-size: 50px;
-    cursor: pointer;
+    margin-left: 178px;
+    margin-top: 40px;
+    font-size: 18px;
     background-color: azure;
-    padding: 10px
+    padding: 10px;
+}
 
+#code{
+    padding-bottom: 15px;
+}
+
+#loading-time{
+    margin-left: 262px;
+    margin-top: 40px;
+    padding: 20px;
+    font-size: 40px;
+    display: inline-block;
+    width: 30px;
+}
+
+.spinning-hippo{
+    width: 20px;
+    height: 20px;
+    background-color: azure;
+    animation-name: spin;
+    animation-duration: 6000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+}
+  
+  @keyframes spin {
+      from {
+          transform:rotate(0deg);
+      }
+      to {
+          transform:rotate(720deg);
+      }
+  }
+
+#join-game{
+    margin-top: 8px;
+    font-size: 18px;
+}
+
+#code-input{
+    width: 60px;
 }
 
 #win{
@@ -79,7 +217,7 @@
     padding-right: 25px;}
 
 .message{
-    font-family: 'Shadows Into Light', cursive;
+    font-family: 'Patrick Hand', cursive;
     font-weight: normal;
     font-size:22px;
 }
@@ -153,19 +291,3 @@
     cursor: pointer;
 }
 
-/* #container{
-    display: grid;
-    grid-gap: 20px;
-    padding-left: 25px;
-    padding-right: 25px;
-    grid-template-columns: 3fr 1fr;
-    grid-template-areas: 
-    "h ."
-    "i b"
-    "p p"
-}
-
-#header{
-    grid-area: h;
-    color: #3498db;
-} */
