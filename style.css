@@ -86,6 +86,22 @@ body{
         "fc m lc";
     }
 
+        .game-message{
+            background-color: azure;
+            padding: 10px;
+            font-family: 'Patrick Hand', cursive;
+            text-align: center;
+            position: absolute;
+        }
+
+        .answer{
+            font-size: 17px;
+            color: red;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top:  5px;
+        }
+
         #start{
             height: 189px;
             width: 247px;
@@ -97,6 +113,41 @@ body{
             font-size: 28px;
             background-color: azure;
             padding: 10px
+        }
+
+        #out-of-time{
+            width: 235px;
+            margin-left: 172;
+            margin-top: 20px;
+        }
+
+        #proceed-alone{
+            width: 235px;
+            margin-left: 172;
+            margin-top: 20px;
+        }
+
+        .large-font{
+            font-weight: bold;
+            font-family: 'Vibes', cursive;
+            font-size: 40px;
+            height: 55px;
+        }
+
+        .big-font{
+            font-family: 'Patrick Hand', cursive;
+            font-size: 28px;
+        }
+
+        .medium-font{
+            font-family: 'Patrick Hand', cursive;
+            font-size: 17px;
+        }
+
+        .small-font{
+            font-family: 'Patrick Hand', cursive;
+            font-size: 12px;
+            margin-top: 5px;
         }
 
 #welcome{
@@ -118,6 +169,20 @@ body{
 
 }
 
+#loser{
+    margin-left: 237px;
+    padding-left: 20;
+    padding-right: 20px;
+    margin-top:  40px;
+}
+
+#bye{
+    margin-left: 181px;
+    padding-left: 20;
+    padding-right: 20px;
+    margin-top:  40px;
+}
+
 .wrong-code{
     display: none;
     color:  red;
@@ -128,15 +193,21 @@ body{
     font-family: 'Patrick Hand', cursive;
     text-align: center;
     position: absolute;
-    margin-left: 178px;
+    margin-left: 191px;
     margin-top: 40px;
     font-size: 18px;
     background-color: azure;
     padding: 10px;
 }
 
+.room-id{
+    color: #b71540;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 18px;
+}
+
 #code{
-    padding-bottom: 15px;
+    padding-bottom: 10px;
 }
 
 #loading-time{
@@ -281,8 +352,12 @@ body{
     font-size: 50px;
     color: brown;
     padding: 10px;
-    margin-left: 43.5%;
-    margin-top: 40px;
+}
+
+.wink{
+    font-size: 40px;
+    color: #ff7979;
+    margin-top: 15px;
 }
 
 .target{

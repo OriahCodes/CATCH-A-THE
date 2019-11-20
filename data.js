@@ -15,7 +15,7 @@ var db = firebase.firestore()
 function LocalData(){
   const _renderer = Renderer()
 
-  let _game = { //local data. This is it's structure:
+  let _game = { 
     roomInfo: {},
     playerInfo: {}, 
     targets:[],
@@ -28,7 +28,7 @@ function LocalData(){
 
     function roomListener(roomID){
       db.doc('rooms/' + roomID).onSnapshot(roomSnapShot => {
-          _game.roomInfo = roomSnapShot.data() //] roomInfo
+          _game.roomInfo = roomSnapShot.data() //
 
           if (_game.playerInfo){ // scoreCount
             const thisPlayer = _game.playerInfo.numPlayer
@@ -51,8 +51,6 @@ function LocalData(){
       db.doc('players/' +playerID).onSnapshot(playerSnapshot => {
         _game.playerInfo= playerSnapshot.data()
         _game.playerInfo.id = playerID
-        // _game.playerInfo.level  = 
-        _game.playerInfo.levelDuration = playerSnapshot.data().level * 2000
       })
     }
 
@@ -60,7 +58,7 @@ function LocalData(){
       db.doc('players/' +playerID + '/levelInfo/level').onSnapshot(levelSnapShot => {
         levelUp(levelSnapShot.data().level)
         console.log("leveled up in local data")
-        if (levelSnapShot.data().level > 1){ //////////////////////
+        if (levelSnapShot.data().level > 1){ 
           _renderer.renderTargets(_game)
           _renderer.renderGameInfo(_game)
         }
@@ -74,18 +72,8 @@ function LocalData(){
     }
   }
 
-  function newGame(numPlayer){ 
-      addTargets(numPlayer, 1)
-      _game[numPlayer].level = 1
-      _game[numPlayer].targetType =  targetTypes[0]
-      _game[numPlayer].levelDuration = 2000
-      _game[numPlayer].totalScore = 0
-
-      // here comes thr rvrn emmiter (to the renderer module)!!
-  }
-
   function getLocalInfo(){
-      return _game
+    return _game
   }
 
   function addTargets(numTargets){
@@ -115,28 +103,38 @@ function LocalData(){
       }
   }
 
-  const checkWin = function(){
-      if (_game.targets == ""){
-          return true
-      }
-      return false
-  }
-
   const levelUp = function(level){ 
       _game.playerInfo.level = level
-      _game.playerInfo.levelDuration = _game.playerInfo.level * 2000
+      _game.playerInfo.levelDuration = levelDurationCalc(level)
       if (_game.targetType = 8) {_game.targetType = 0}
       addTargets(_game.playerInfo.level)
   }
 
+  function levelDurationCalc(level){
+    return (Math.round((-Math.log10(1.4 *2) + 2) * level)) * 1000
+  }
+
+  const restartLevel = function(level){
+      _game.targets = []
+      addTargets(_game.playerInfo.level)
+  }
+
+  const checkWin = function(){
+    if (_game.targets.length == 0){
+        return true
+    }
+    return false
+}
+
   return{
       InitListeners: InitListeners,
       
-      newGame: newGame,
       getLocalInfo: getLocalInfo,
       addTargets: addTargets,
       removeTarget: removeTarget,
-      checkWin: checkWin, 
       levelUp: levelUp,
+      levelDurationCalc: levelDurationCalc,
+      restartLevel: restartLevel,
+      checkWin: checkWin, 
   }
 }

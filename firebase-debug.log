@@ -1,0 +1,29 @@
+[debug] [2019-11-08T08:53:52.796Z] ----------------------------------------------------------------------
+[debug] [2019-11-08T08:53:52.802Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Oriah\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-11-08T08:53:52.802Z] CLI Version:   7.6.2
+[debug] [2019-11-08T08:53:52.802Z] Platform:      win32
+[debug] [2019-11-08T08:53:52.803Z] Node Version:  v12.13.0
+[debug] [2019-11-08T08:53:52.805Z] Time:          Fri Nov 08 2019 10:53:52 GMT+0200 (GMT+02:00)
+[debug] [2019-11-08T08:53:52.805Z] ----------------------------------------------------------------------
+[debug] [2019-11-08T08:53:52.805Z] 
+[debug] [2019-11-08T08:53:52.834Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-11-08T08:53:52.835Z] > authorizing via signed-in user
+[debug] [2019-11-08T08:53:52.836Z] [iam] checking project catch-a-the for permissions ["firebase.projects.get"]
+[debug] [2019-11-08T08:53:52.840Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-11-08T08:53:52.840Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-11-08T08:53:53.164Z] <<< HTTP RESPONSE 200
+[debug] [2019-11-08T08:53:53.184Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/catch-a-the:testIamPermissions  
+
+[debug] [2019-11-08T08:53:53.584Z] <<< HTTP RESPONSE 200
+[debug] [2019-11-08T08:53:53.587Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/catch-a-the  
+ 
+[debug] [2019-11-08T08:53:54.047Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\Oriah\Desktop\code\js\little_projects\catch-a-frog'...
+[info] 
+[debug] [2019-11-08T08:53:54.053Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/catch-a-the/webApps/-/config  
+ 
+[debug] [2019-11-08T08:53:55.228Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000

@@ -9,14 +9,14 @@ const initListeners = localData.InitListeners()
 //===========================================================================================
 
 function addFirstPlayer(){
-    let roomID = ""
+    // let roomID = ""
 
     $("#animal-land").empty()
 
     // (practicing chained promises)
     return controller.generateRoom()
     .then(roomID => { //generate room
-        $("#animal-land").append(`<div id='waiting'><div id='code'> your code is: ${roomID}</div> <div> waiting for your game partner </div><div><i class="fas fa-hippo spinning-hippo"></i></div></div>`)
+        $("#animal-land").append(`<div id='waiting'><div id='code'> your code is: <div class="room-id">${roomID}</div></div> <div> waiting for your game partner </div><div><i class="fas fa-hippo spinning-hippo"></i></div></div>`)
         initListeners.roomListener(roomID) //listen to room
 		return controller.addPlayers("player1", roomID) //create player
     }).then (result => { //result = [roomID, playerID]
@@ -24,10 +24,14 @@ function addFirstPlayer(){
         initListeners.levelListner(result[1])
         return controller.addPlayerToRoom(result[0], "player1", result[1]) //add plyer to room
     }).then(roomID => {
+        controller.updateRoomStatus(roomID, "waiting")
         return controller.fullRoomListener(roomID)
-    }).then ((full) =>{
-        if (full){
-            load()
+    }).then ((roomID) =>{
+        load()
+        return controller.RoomStatusListener(roomID)
+    }).then ((playerLeft) =>{
+        if (playerLeft != "player1"){
+            proceedAloneMessage()
         }
     }).catch(error => {
         console.log("shit: " + error)
@@ -58,8 +62,13 @@ function addSecondPlayer(){
                 initListeners.levelListner(result[1])
                 return controller.addPlayerToRoom(result[0], "player2", result[1]) //adding player to room
             }).then (roomID => {
-                controller.fullRoom(roomID)
+                controller.updateRoomStatus(roomID, "full")
                 load()//should solve this setTimeout issue
+                return controller.RoomStatusListener(roomID)
+            }).then ((playerLeft) =>{
+                if (playerLeft != "player2"){
+                    proceedAloneMessage()
+                }
             }).catch(error => {
                 console.log("shit: " + error)
             })
@@ -74,9 +83,7 @@ function addSecondPlayer(){
 // Load game
 //===========================================================================================
 
-let myInterval=[]
 let loadInterval = []
-
 function load(){  // load game: 3,2,1 go!
 
     $("#animal-land").empty()
@@ -102,9 +109,8 @@ function load(){  // load game: 3,2,1 go!
 //===========================================================================================
 // Timer
 //===========================================================================================
-
+let myInterval=[]
 let timeLeft = 0
-
 function timer(){
 
     timeLeft = localData.getLocalInfo().playerInfo.levelDuration / 1000
@@ -118,14 +124,54 @@ function timer(){
         $("#time-bar").text(timeLeft + " seconds left")
 
         if (timeLeft == 0){ 
-            renderer.renderLose()
-
-            $("#animal-land").off("click", ".target", target_handeler) 
+            $("#animal-land").off("click", ".target", target_handler) 
             $("#animal-land").find(".target").css({cursor:"default"});
+
+            $("#animal-land").append(`<div class='game-message' id='out-of-time'><div class='big-font'>uh oh!</div>
+            <div class='medium-font'>you ran out of time. would you like to restart the level and keep playing? <div class='small-font'>quick! your competitor is beating you!
+            <div class='answer' onclick='RestartLevel()'>YES</div><div class='answer' style='color: #16a085' onclick='loser()'>What a shame. let me out of here</div></div></div></div>`)
+
 
             clearInterval(myInterval) 
         }
     },1000)
+}
+
+//===========================================================================================
+// Handle game messages
+//===========================================================================================
+
+function loser(){
+    $("#animal-land").empty().append(`<div id='loser' class='game-message'><div class='large-font'>LOSER</div><i class="fas fa-poo poop"></i></div>`)
+    quit()
+}
+
+function okBye(){
+    $("#animal-land").empty().append(`<div id='bye' class='game-message'><div class='large-font'><div class='big-font'>Thanks for Playing!</div><div class='small-font'>Come back later for some more Dopamine</div></div><i class="fas fa-laugh-wink wink"></i></div>`)
+    quit() 
+}
+
+function RestartLevel(){
+    $("#animal-land").empty()
+    localData.restartLevel(localData.getLocalInfo().playerInfo.level)
+    newGame_handler()
+}
+
+function proceedAloneMessage(){
+    // pause timer
+    clearInterval(myInterval) 
+
+    $("#animal-land").off("click", ".target", target_handler) 
+    $("#animal-land").find(".target").css({cursor:"default"});
+    $("#animal-land").append(`<div class='game-message' id='proceed-alone'>Your competitor left the game. Would you like to continue catching things anyway?<div class='answer'>YEAH</div><div onclick='okBye()' class='answer' style='color: #16a085'>Nah</div>`)
+}
+
+function quit(){
+    controller.deletePlayer(localData.getLocalInfo().playerInfo)
+    let playerLeft = localData.getLocalInfo().playerInfo.numPlayer + "-left"
+    controller.updateRoomStatus(localData.getLocalInfo().playerInfo.roomID, playerLeft)
+
+    //note : if room empty -delete 
 }
 
 //===========================================================================================
@@ -139,10 +185,10 @@ function newGame_handler(){
     
     timer()
 
-    $("#animal-land").on("click", ".target", target_handeler)
+    $("#animal-land").on("click", ".target", target_handler)
 }
 
-function target_handeler(){
+function target_handler(){
 
 
     const roomID = localData.getLocalInfo().playerInfo.roomID
@@ -155,14 +201,13 @@ function target_handeler(){
     if (isWinning == true){ 
         $("#my-plus-points").text("+ " + timeLeft).show()
         setTimeout(function(){ $("#my-plus-points").text("+ " + timeLeft).hide()},1000)
-        controller._addPoints(roomID, numPlayer, timeLeft) /////////////////////////////////////////
+        controller.addPoints(roomID, numPlayer, timeLeft)
         clearInterval(myInterval)
-        //points rendered from localData
 
-        // renderer.renderWin()
-        controller._levelUp(roomID, numPlayer).then(function(){
-            console.log("level updated!")
-                timer()     
+        controller.levelUpDB(roomID, numPlayer).then(function(){
+            setTimeout(function(){
+                timer() 
+            }, 50)
         }).catch(function(error){
             console.log("Got an error:" , error)
         })
